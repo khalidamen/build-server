@@ -6,7 +6,9 @@ RUN mkdir /var/cache/jenkins
 RUN chown -R  jenkins:jenkins /var/log/jenkins
 RUN chown -R  jenkins:jenkins /var/cache/jenkins
 
-RUN apt-get update && apt-get install -y ruby make nodejs build-essential git
+RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get update && apt-get install -y ruby make nodejs build-essential
 
 USER jenkins
 ENV JAVA_OPTS="-Xmx4096m"
