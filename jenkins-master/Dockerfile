@@ -8,10 +8,12 @@ RUN chown -R  jenkins:jenkins /var/cache/jenkins
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
-RUN apt-get update && apt-get install -y ruby make nodejs build-essential
+RUN apt-get update && apt-get install -y ruby make nodejs build-essential php php-xml php-dom php-intl php-simplexml php-mbstring
+
+RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 
 USER jenkins
-ENV JAVA_OPTS="-Xmx4096m"
+ENV JAVA_OPTS="-Xmx4096m -Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
 
 # install plugins; the plugins.txt file can be exported from Jenkins like this:
 # JENKINS_HOST=username:password@myhost.com:port

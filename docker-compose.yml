@@ -8,16 +8,12 @@ master:
   volumes_from:
     - data
   ports:
-    - "50000:50000"
-
+    - "${MASTER_PORT}:50000"
+  environment:
+    JAVA_OPTS: "-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
 nginx:
   build: jenkins-nginx
   ports:
      - "${HTTP_PORT}:80" # Need to make this configurable, as we'll want 80:80 in 'prod' environments
   links:
      - master:jenkins-master
-composer:       
-  image: "composer"
-  command: install
-  volumes:
-   - ./app:/app                  
